@@ -1547,7 +1547,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			DuelClient::SendResponse();
 			return true;
 		}
-		if(forced && !mainGame->always_chain && (count == 1 || (mainGame->chkAutoChain->isChecked() && !mainGame->chain_when_avail))) {
+		if(mainGame->chkAutoChain->isChecked() && forced && !(mainGame->always_chain || mainGame->chain_when_avail)) {
 			SetResponseI(0);
 			mainGame->dField.ClearChainSelect();
 			DuelClient::SendResponse();
