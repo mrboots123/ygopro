@@ -941,8 +941,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		}
 		case HINT_OPSELECTED: {
 			myswprintf(textBuffer, dataManager.GetSysString(1510), dataManager.GetDesc(data));
-			mainGame->lstLog->addItem(textBuffer);
-			mainGame->logParam.push_back(0);
+			mainGame->AddLog(textBuffer);
 			mainGame->gMutex.Lock();
 			mainGame->SetStaticText(mainGame->stACMessage, 310, mainGame->guiFont, textBuffer);
 			mainGame->PopupElement(mainGame->wACMessage, 20);
@@ -959,8 +958,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		}
 		case HINT_RACE: {
 			myswprintf(textBuffer, dataManager.GetSysString(1511), dataManager.FormatRace(data));
-			mainGame->lstLog->addItem(textBuffer);
-			mainGame->logParam.push_back(0);
+			mainGame->AddLog(textBuffer);
 			mainGame->gMutex.Lock();
 			mainGame->SetStaticText(mainGame->stACMessage, 310, mainGame->guiFont, textBuffer);
 			mainGame->PopupElement(mainGame->wACMessage, 20);
@@ -970,8 +968,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		}
 		case HINT_ATTRIB: {
 			myswprintf(textBuffer, dataManager.GetSysString(1511), dataManager.FormatAttribute(data));
-			mainGame->lstLog->addItem(textBuffer);
-			mainGame->logParam.push_back(0);
+			mainGame->AddLog(textBuffer);
 			mainGame->gMutex.Lock();
 			mainGame->SetStaticText(mainGame->stACMessage, 310, mainGame->guiFont, textBuffer);
 			mainGame->PopupElement(mainGame->wACMessage, 20);
@@ -981,8 +978,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		}
 		case HINT_CODE: {
 			myswprintf(textBuffer, dataManager.GetSysString(1511), dataManager.GetName(data));
-			mainGame->lstLog->addItem(textBuffer);
-			mainGame->logParam.push_back(data);
+			mainGame->AddLog(textBuffer, data);
 			mainGame->gMutex.Lock();
 			mainGame->SetStaticText(mainGame->stACMessage, 310, mainGame->guiFont, textBuffer);
 			mainGame->PopupElement(mainGame->wACMessage, 20);
@@ -992,8 +988,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		}
 		case HINT_NUMBER: {
 			myswprintf(textBuffer, dataManager.GetSysString(1512), data);
-			mainGame->lstLog->addItem(textBuffer);
-			mainGame->logParam.push_back(0);
+			mainGame->AddLog(textBuffer);
 			mainGame->gMutex.Lock();
 			mainGame->SetStaticText(mainGame->stACMessage, 310, mainGame->guiFont, textBuffer);
 			mainGame->PopupElement(mainGame->wACMessage, 20);
@@ -1873,14 +1868,12 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			return true;
 		soundManager.PlaySoundEffect(SOUND_REVEAL);
 		myswprintf(textBuffer, dataManager.GetSysString(207), count);
-		mainGame->lstLog->addItem(textBuffer);
-		mainGame->logParam.push_back(0);
+		mainGame->AddLog(textBuffer);
 		for (int i = 0; i < count; ++i) {
 			pcard = *(mainGame->dField.deck[player].rbegin() + i);
 			mainGame->gMutex.Lock();
 			myswprintf(textBuffer, L"*[%ls]", dataManager.GetName(pcard->code));
-			mainGame->lstLog->addItem(textBuffer);
-			mainGame->logParam.push_back(pcard->code);
+			mainGame->AddLog(textBuffer, pcard->code);
 			mainGame->gMutex.Unlock();
 			float shift = -0.15f;
 			if (player == 1) shift = 0.15f;
@@ -1913,14 +1906,12 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			return true;
 		soundManager.PlaySoundEffect(SOUND_REVEAL);
 		myswprintf(textBuffer, dataManager.GetSysString(207), count);
-		mainGame->lstLog->addItem(textBuffer);
-		mainGame->logParam.push_back(0);
+		mainGame->AddLog(textBuffer);
 		for (int i = 0; i < count; ++i) {
 			pcard = *(mainGame->dField.extra[player].rbegin() + i + mainGame->dField.extra_p_count[player]);
 			mainGame->gMutex.Lock();
 			myswprintf(textBuffer, L"*[%ls]", dataManager.GetName(pcard->code));
-			mainGame->lstLog->addItem(textBuffer);
-			mainGame->logParam.push_back(pcard->code);
+			mainGame->AddLog(textBuffer, pcard->code);
 			mainGame->gMutex.Unlock();
 			if (player == 0)
 				pcard->dPos = irr::core::vector3df(0, -0.20f, 0);
@@ -1948,8 +1939,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		}
 		soundManager.PlaySoundEffect(SOUND_REVEAL);
 		myswprintf(textBuffer, dataManager.GetSysString(208), count);
-		mainGame->lstLog->addItem(textBuffer);
-		mainGame->logParam.push_back(0);
+		mainGame->AddLog(textBuffer);
 		for (int i = 0; i < count; ++i) {
 			code = BufferIO::ReadInt32(pbuf);
 			c = mainGame->LocalPlayer(BufferIO::ReadInt8(pbuf));
@@ -1960,8 +1950,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 				pcard->SetCode(code);
 			mainGame->gMutex.Lock();
 			myswprintf(textBuffer, L"*[%ls]", dataManager.GetName(code));
-			mainGame->lstLog->addItem(textBuffer);
-			mainGame->logParam.push_back(code);
+			mainGame->AddLog(textBuffer, code);
 			mainGame->gMutex.Unlock();
 			if (l & 0x41) {
 				if(count == 1) {
@@ -2892,8 +2881,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			} else
 				mainGame->WaitFrameSignal(30);
 			myswprintf(textBuffer, dataManager.GetSysString(1610), dataManager.GetName(pcard->code), dataManager.FormatLocation(l, s), s + 1);
-			mainGame->lstLog->addItem(textBuffer);
-			mainGame->logParam.push_back(pcard->code);
+			mainGame->AddLog(textBuffer, pcard->code);
 			pcard->is_highlighting = false;
 		}
 		return true;
@@ -3296,8 +3284,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		BufferIO::ReadInt32(pbuf);
 		unsigned int code = (unsigned int)BufferIO::ReadInt32(pbuf);
 		myswprintf(textBuffer, dataManager.GetSysString(1622), dataManager.GetName(code));
-		mainGame->lstLog->addItem(textBuffer);
-		mainGame->logParam.push_back(code);
+		mainGame->AddLog(textBuffer, code);
 		return true;
 	}
 	case MSG_TOSS_COIN: {
@@ -3316,8 +3303,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			return true;
 		soundManager.PlaySoundEffect(SOUND_COIN);
 		mainGame->gMutex.Lock();
-		mainGame->lstLog->addItem(textBuffer);
-		mainGame->logParam.push_back(0);
+		mainGame->AddLog(textBuffer);
 		mainGame->stACMessage->setText(textBuffer);
 		mainGame->PopupElement(mainGame->wACMessage, 20);
 		mainGame->gMutex.Unlock();
@@ -3340,8 +3326,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			return true;
 		soundManager.PlaySoundEffect(SOUND_DICE);
 		mainGame->gMutex.Lock();
-		mainGame->lstLog->addItem(textBuffer);
-		mainGame->logParam.push_back(0);
+		mainGame->AddLog(textBuffer);
 		mainGame->stACMessage->setText(textBuffer);
 		mainGame->PopupElement(mainGame->wACMessage, 20);
 		mainGame->gMutex.Unlock();
