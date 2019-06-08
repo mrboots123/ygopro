@@ -117,6 +117,8 @@ bool Game::Initialize() {
 	env->addStaticText(L"目前测试的内容：\n\n\
 卡组分类。\n\
 卡组管理。\n\
+优化加载卡组速度。\n\
+优化图片按钮。\n\
 \n\
 \n已知问题：\n\
 \n鸽了，爽\n\
