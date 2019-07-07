@@ -3470,8 +3470,10 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 	}
 	case MSG_ANNOUNCE_CARD: {
 		/*int player = */mainGame->LocalPlayer(BufferIO::ReadInt8(pbuf));
-		mainGame->dField.declarable_type = BufferIO::ReadInt32(pbuf);
-		mainGame->dField.opcode.clear();
+		int count = BufferIO::ReadUInt8(pbuf);
+		mainGame->dField.declare_opcodes.clear();
+		for (int i = 0; i < count; ++i)
+			mainGame->dField.declare_opcodes.push_back(BufferIO::ReadInt32(pbuf));
 		if(select_hint)
 			myswprintf(textBuffer, L"%ls", dataManager.GetDesc(select_hint));
 		else myswprintf(textBuffer, dataManager.GetSysString(564));
@@ -3479,7 +3481,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		mainGame->gMutex.Lock();
 		mainGame->ebANCard->setText(L"");
 		mainGame->wANCard->setText(textBuffer);
-		mainGame->dField.UpdateDeclarableCode();
+		mainGame->dField.UpdateDeclarableList();
 		mainGame->PopupElement(mainGame->wANCard);
 		mainGame->gMutex.Unlock();
 		return false;
@@ -3501,25 +3503,6 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		select_hint = 0;
 		mainGame->wANNumber->setText(textBuffer);
 		mainGame->PopupElement(mainGame->wANNumber);
-		mainGame->gMutex.Unlock();
-		return false;
-	}
-	case MSG_ANNOUNCE_CARD_FILTER: {
-		/*int player = */mainGame->LocalPlayer(BufferIO::ReadInt8(pbuf));
-		int count = BufferIO::ReadUInt8(pbuf);
-		mainGame->dField.declarable_type = 0;
-		mainGame->dField.opcode.clear();
-		for (int i = 0; i < count; ++i)
-			mainGame->dField.opcode.push_back(BufferIO::ReadInt32(pbuf));
-		if(select_hint)
-			myswprintf(textBuffer, L"%ls", dataManager.GetDesc(select_hint));
-		else myswprintf(textBuffer, dataManager.GetSysString(564));
-		select_hint = 0;
-		mainGame->gMutex.Lock();
-		mainGame->ebANCard->setText(L"");
-		mainGame->wANCard->setText(textBuffer);
-		mainGame->dField.UpdateDeclarableCode();
-		mainGame->PopupElement(mainGame->wANCard);
 		mainGame->gMutex.Unlock();
 		return false;
 	}
@@ -3880,24 +3863,45 @@ void DuelClient::BeginRefreshHost() {
 	if(!host)
 		return;
 	SOCKET reply = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	BOOL opt = TRUE;
-	setsockopt(reply, SOL_SOCKET, SO_BROADCAST, (const char*)&opt, sizeof(BOOL));
+	sockaddr_in reply_addr;
+	memset(&reply_addr, 0, sizeof(reply_addr));
+	reply_addr.sin_family = AF_INET;
+	reply_addr.sin_port = htons(7921);
+	reply_addr.sin_addr.s_addr = 0;
+	if(bind(reply, (sockaddr*)&reply_addr, sizeof(reply_addr)) == SOCKET_ERROR) {
+		closesocket(reply);
+		return;
+	}
 	timeval timeout = {3, 0};
 	resp_event = event_new(broadev, reply, EV_TIMEOUT | EV_READ | EV_PERSIST, BroadcastReply, broadev);
 	event_add(resp_event, &timeout);
 	Thread::NewThread(RefreshThread, broadev);
 	//send request
-	SOCKADDR_IN sockTo = {};
+	SOCKADDR_IN local;
+	local.sin_family = AF_INET;
+	local.sin_port = htons(7922);
+	SOCKADDR_IN sockTo;
+	sockTo.sin_addr.s_addr = htonl(INADDR_BROADCAST);
 	sockTo.sin_family = AF_INET;
-	sockTo.sin_port = htons(7911);
+	sockTo.sin_port = htons(7920);
 	HostRequest hReq;
 	hReq.identifier = NETWORK_CLIENT_ID;
 	for(int i = 0; i < 8; ++i) {
 		if(host->h_addr_list[i] == 0)
 			break;
 		unsigned int local_addr = *(unsigned int*)host->h_addr_list[i];
-		sockTo.sin_addr.s_addr = local_addr;
-		sendto(reply, (const char*)&hReq, sizeof(HostRequest), 0, (sockaddr*)&sockTo, sizeof(sockaddr));
+		local.sin_addr.s_addr = local_addr;
+		SOCKET sSend = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+		if(sSend == INVALID_SOCKET)
+			break;
+		BOOL opt = TRUE;
+		setsockopt(sSend, SOL_SOCKET, SO_BROADCAST, (const char*)&opt, sizeof(BOOL));
+		if(bind(sSend, (sockaddr*)&local, sizeof(sockaddr)) == SOCKET_ERROR) {
+			closesocket(sSend);
+			break;
+		}
+		sendto(sSend, (const char*)&hReq, sizeof(HostRequest), 0, (sockaddr*)&sockTo, sizeof(sockaddr));
+		closesocket(sSend);
 	}
 }
 int DuelClient::RefreshThread(void * arg) {
