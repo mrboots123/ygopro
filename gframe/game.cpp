@@ -115,6 +115,7 @@ bool Game::Initialize() {
 	env->addStaticText(L"https://ygo233.com/", rect<s32>(10, 360, 270, 380), false, false, wMainMenu);
 
 	env->addStaticText(L"目前测试的内容：\n\n\
+大师规则2020。\n\
 卡组分类。\n\
 卡组管理。\n\
 优化加载卡组速度。\n\
