@@ -35,6 +35,7 @@ struct Config {
 	int chkWaitChain;
 	int chkIgnore1;
 	int chkIgnore2;
+	int default_rule;
 	int hide_setname;
 	int hide_hint_button;
 	int control_mode;
