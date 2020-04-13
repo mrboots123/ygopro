@@ -15,7 +15,7 @@ solution "ygo"
         systemversion "latest"
         startproject "ygopro"
 
-    configuration { "windows", "not vs2017" }
+    configuration { "windows", "vs2015" }
         toolset "v140_xp"
 
     configuration { "windows", "vs2017" }

@@ -27,10 +27,10 @@ project "ygopro"
         end
         links { "opengl32", "ws2_32", "winmm", "gdi32", "kernel32", "user32", "imm32" }
     if IRRKLANG_PRO then
-        configuration { "windows", "not vs2017" }
+        configuration { "windows", "not Debug" }
             libdirs { "../irrklang/lib/Win32-visualStudio" }
-        configuration { "windows", "vs2017" }
-            libdirs { "../irrklang/lib/Win32-vs2017" }
+        configuration { "windows", "Debug" }
+            libdirs { "../irrklang/lib/Win32-visualStudio-debug" }
     end
     configuration {"windows", "not vs*"}
         includedirs { "/mingw/include/irrlicht", "/mingw/include/freetype2" }
