@@ -10,6 +10,9 @@ install:
   - git submodule update --init --recursive
 
   # environment and system dependency
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://download.microsoft.com/download/A/E/7/AE743F1F-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe ; exit 0"
+  - DXSDK_Jun10.exe /F /U
+  
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-alpha15/premake-5.0.0-alpha15-windows.zip ; exit 0"
   - 7z x premake-5.0.0-alpha15-windows.zip
   
@@ -97,3 +100,4 @@ cache:
   - irrlicht-1.8.4.zip
   - lua-5.3.5.tar.gz
   - sqlite-amalgamation-3310100.zip
+  - DXSDK_Jun10.exe
