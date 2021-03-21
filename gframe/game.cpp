@@ -172,8 +172,6 @@ bool Game::Initialize() {
 
 	env->addStaticText(L"目前测试的内容：\n\n\
 鼠标滚轮浏览卡组中的卡片。\n\
-卡组分类。\n\
-卡组管理。\n\
 \n\
 \n已知问题：\n\
 \n鸽了，爽\n\
