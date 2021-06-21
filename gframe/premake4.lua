@@ -28,7 +28,7 @@ project "ygopro"
         links { "opengl32", "ws2_32", "winmm", "gdi32", "kernel32", "user32", "imm32" }
     if IRRKLANG_PRO then
         configuration { "windows", "not Debug" }
-            libdirs { "../irrklang/lib/Win32-visualStudio" }
+            libdirs { "../irrklang/lib/Win32-vs2019" }
         configuration { "windows", "Debug" }
             libdirs { "../irrklang/lib/Win32-visualStudio-debug" }
     end
