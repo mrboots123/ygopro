@@ -9,7 +9,7 @@ solution "ygo"
     configurations { "Release", "Debug" }
 
     configuration "windows"
-        defines { "WIN32", "_WIN32", "WINVER=0x0501" }
+        defines { "WIN32", "_WIN32", "WINVER=0x0501", "_IRR_WCHAR_FILESYSTEM" }
         libdirs { "$(DXSDK_DIR)Lib/x86" }
         entrypoint "mainCRTStartup"
         systemversion "latest"

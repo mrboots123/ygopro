@@ -21,13 +21,13 @@ project "freetype"
             "src/base/ftpfr.c",
             "src/base/ftstroke.c",
             "src/base/ftsynth.c",
-            "src/base/ftsystem.c",
             "src/base/fttype1.c",
             "src/base/ftwinfnt.c",
             "src/bdf/bdf.c",
             "src/cache/ftcache.c",
             "src/cff/cff.c",
             "src/cid/type1cid.c",
+            "src/dlg/dlgwrap.c",
             "src/gzip/ftgzip.c",
             "src/lzw/ftlzw.c",
             "src/pcf/pcf.c",
@@ -37,6 +37,7 @@ project "freetype"
             "src/psnames/psmodule.c",
             "src/raster/raster.c",
             "src/sfnt/sfnt.c",
+            "src/sdf/sdf.c",
             "src/smooth/smooth.c",
             "src/truetype/truetype.c",
             "src/type1/type1.c",
@@ -44,4 +45,5 @@ project "freetype"
             "src/winfonts/winfnt.c" }
 
     configuration "windows"
-        files { "builds/windows/ftdebug.c" }
+        files { "builds/windows/ftsystem.c",
+				"builds/windows/ftdebug.c" }
