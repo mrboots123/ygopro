@@ -44,6 +44,6 @@ project "freetype"
             "src/type42/type42.c",
             "src/winfonts/winfnt.c" }
 
-    configuration "windows"
+    filter "system:windows"
         files { "builds/windows/ftsystem.c",
 				"builds/windows/ftdebug.c" }

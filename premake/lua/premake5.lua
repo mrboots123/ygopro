@@ -1,8 +1,8 @@
 project "lua"
     kind "StaticLib"
 
-    files { "*.c", "*.cpp", "*.h", "*.hpp" }
+    files { "*.c", "*.h", "*.hpp" }
     removefiles { "lua.c", "luac.c" }
 
-    configuration "vs*"	
+    filter "action:vs*"	
         buildoptions { "/TP" }
