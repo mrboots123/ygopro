@@ -42,7 +42,7 @@ install:
   
   # patch irrlicht
   - cd irrlicht
-  - patch -p1 < irrlicht\irrlicht.patch
+  - patch -p1 < irrlicht.patch
   - cd ..
 
   # premake
