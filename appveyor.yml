@@ -24,9 +24,7 @@ install:
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.5.zip ; exit 0"
   - 7z x irrlicht-1.8.5.zip
-  - md irrlicht
-  - move irrlicht-1.8.5\source\Irrlicht irrlicht\src
-  - move irrlicht-1.8.5\include irrlicht\include
+  - move irrlicht-1.8.5 irrlicht
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.lua.org/ftp/lua-5.3.6.tar.gz ; exit 0"
   - tar xf lua-5.3.6.tar.gz
@@ -51,7 +49,7 @@ install:
 configuration: Release
 
 build: 
-    project: build/ygo.sln
+    project: build/YGOPro.sln
     parallel: true
 
 after_build:
