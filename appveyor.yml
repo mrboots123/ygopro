@@ -41,7 +41,9 @@ install:
   - xcopy /E premake\* .
   
   # patch irrlicht
+  - cd irrlicht
   - patch -p1 < irrlicht\irrlicht.patch
+  - cd ..
 
   # premake
   - premake5 vs2019
