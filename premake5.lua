@@ -92,6 +92,8 @@ workspace "YGOPro"
     filter {"not action:vs*", "system:windows"}
         buildoptions { "-static-libgcc" }
 
+    filter {}
+
     include "ocgcore"
     include "gframe"
     if BUILD_LUA then

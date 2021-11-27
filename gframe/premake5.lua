@@ -51,7 +51,7 @@ project "ygopro"
     filter "not system:windows"
         includedirs { "/usr/include/irrlicht", "/usr/include/freetype2" }
         excludes { "COSOperator.*" }
-        links { "event_pthreads", "GL", "dl", "pthread" }
+        links { "event_pthreads", "GL", "dl", "pthread", "X11", "Xxf86vm" }
     filter "system:linux"
         if USE_IRRKLANG then
             defines { "YGOPRO_USE_IRRKLANG" }
