@@ -217,10 +217,10 @@ index 28290cb..76dfea1 100644
  		if (ExternalWindow && msg.hwnd == HWnd)
  			WndProc(HWnd, msg.message, msg.wParam, msg.lParam);
 diff --git a/source/Irrlicht/COSOperator.cpp b/source/Irrlicht/COSOperator.cpp
-index c5e4552..964ae30 100644
+index c5e4552..7d51c63 100644
 --- a/source/Irrlicht/COSOperator.cpp
 +++ b/source/Irrlicht/COSOperator.cpp
-@@ -54,9 +54,9 @@ const core::stringc& COSOperator::getOperatingSystemVersion() const
+@@ -54,9 +54,10 @@ const core::stringc& COSOperator::getOperatingSystemVersion() const
  
  
  //! copies text to the clipboard
@@ -228,11 +228,12 @@ index c5e4552..964ae30 100644
 +void COSOperator::copyToClipboard(const c16* text) const
  {
 -	if (strlen(text)==0)
-+	if (wcslen(text)==0)
++	size_t len = wcslen(text);
++	if (len==0)
  		return;
  
  // Windows version
-@@ -68,15 +68,15 @@ void COSOperator::copyToClipboard(const c8* text) const
+@@ -68,15 +69,15 @@ void COSOperator::copyToClipboard(const c8* text) const
  	EmptyClipboard();
  
  	HGLOBAL clipbuffer;
@@ -241,7 +242,7 @@ index c5e4552..964ae30 100644
  
 -	clipbuffer = GlobalAlloc(GMEM_DDESHARE, strlen(text)+1);
 -	buffer = (char*)GlobalLock(clipbuffer);
-+	clipbuffer = GlobalAlloc(GMEM_DDESHARE, sizeof(wchar_t) * (wcslen(text) + 1));
++	clipbuffer = GlobalAlloc(GMEM_DDESHARE, sizeof(wchar_t) * (len + 1));
 +	buffer = (wchar_t*)GlobalLock(clipbuffer);
  
 -	strcpy(buffer, text);
@@ -253,7 +254,21 @@ index c5e4552..964ae30 100644
  	CloseClipboard();
  
  // MacOSX version
-@@ -95,7 +95,7 @@ void COSOperator::copyToClipboard(const c8* text) const
+@@ -86,7 +87,12 @@ void COSOperator::copyToClipboard(const c8* text) const
+ 
+ #elif defined(_IRR_COMPILE_WITH_X11_DEVICE_)
+     if ( IrrDeviceLinux )
+-        IrrDeviceLinux->copyToClipboard(text);
++	{
++		char ctext[len*2 + 1];
++		size_t lenNew = wcstombs(ctext, text, len*2);
++		ctext[lenNew] = 0;
++        IrrDeviceLinux->copyToClipboard(ctext);
++	}
+ #else
+ 
+ #endif
+@@ -95,7 +101,7 @@ void COSOperator::copyToClipboard(const c8* text) const
  
  //! gets text from the clipboard
  //! \return Returns 0 if no string is in there.
@@ -262,7 +277,7 @@ index c5e4552..964ae30 100644
  {
  #if defined(_IRR_XBOX_PLATFORM_)
  		return 0;
-@@ -103,10 +103,10 @@ const c8* COSOperator::getTextFromClipboard() const
+@@ -103,10 +109,10 @@ const c8* COSOperator::getTextFromClipboard() const
  	if (!OpenClipboard(NULL))
  		return 0;
  
@@ -276,6 +291,22 @@ index c5e4552..964ae30 100644
  	GlobalUnlock( hData );
  	CloseClipboard();
  	return buffer;
+@@ -116,7 +122,14 @@ const c8* COSOperator::getTextFromClipboard() const
+ 
+ #elif defined(_IRR_COMPILE_WITH_X11_DEVICE_)
+     if ( IrrDeviceLinux )
+-        return IrrDeviceLinux->getTextFromClipboard();
++	{
++		const c8 * p = IrrDeviceLinux->getTextFromClipboard();
++		size_t lenOld = strlen(p);
++		wchar_t *ws = new wchar_t[lenOld + 1];
++		size_t lenNew = mbstowcs(ws,p,lenOld);
++		ws[lenNew] = 0;
++        return ws;
++	}
+     return 0;
+ 
+ #else
 diff --git a/source/Irrlicht/COSOperator.h b/source/Irrlicht/COSOperator.h
 index 819805f..a86cb6e 100644
 --- a/source/Irrlicht/COSOperator.h

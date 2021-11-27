@@ -3,8 +3,26 @@ workspace "YGOPro"
     language "C++"
     objdir "obj"
 
-    USE_IRRKLANG = true
-    IRRKLANG_PRO = true
+    USE_IRRKLANG = false
+    IRRKLANG_PRO = false
+
+    if os.ishost("windows") then
+        USE_IRRKLANG = true
+        IRRKLANG_PRO = true
+        BUILD_LUA = true
+        BUILD_EVENT = true
+        BUILD_FREETYPE = true
+        BUILD_IRRLICHT = true
+        BUILD_SQLITE = true
+    else
+        USE_IRRKLANG = true
+        IRRKLANG_PRO = false
+        BUILD_LUA = true
+        BUILD_EVENT = false --not implemented on linux
+        BUILD_FREETYPE = false
+        BUILD_IRRLICHT = true
+        BUILD_SQLITE = false
+    end
 
     configurations { "Release", "Debug" }
 
@@ -76,13 +94,23 @@ workspace "YGOPro"
 
     include "ocgcore"
     include "gframe"
-    if os.ishost("windows") then
+    if BUILD_LUA then
 		include "lua"
+	end
+	if BUILD_EVENT then
 		include "event"
+	end
+    if BUILD_FREETYPE then
 		include "freetype"
+    end
+    if BUILD_IRRLICHT then
 		include "irrlicht"
+    end
+    if BUILD_SQLITE then
 		include "sqlite3"
-		if IRRKLANG_PRO then
-			include "ikpmp3"
-		end
+    end
+    if USE_IRRKLANG then
+        if IRRKLANG_PRO then
+            include "ikpmp3"
+        end
     end

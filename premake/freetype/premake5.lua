@@ -47,3 +47,7 @@ project "freetype"
     filter "system:windows"
         files { "builds/windows/ftsystem.c",
 				"builds/windows/ftdebug.c" }
+
+    filter "not system:windows"
+        files { "src/base/ftsystem.c",
+        "src/base/ftdebug.c" }

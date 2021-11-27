@@ -6,13 +6,26 @@ project "ygopro"
 
     files { "*.cpp", "*.h" }
     includedirs { "../ocgcore" }
-    links { "ocgcore", "clzma", "cspmemvfs", "irrlicht", "freetype", "sqlite3", "event" }
+    links { "ocgcore", "clzma", "cspmemvfs", "lua", "irrlicht", "freetype", "sqlite3", "event" }
+
+    if BUILD_EVENT then
+    	includedirs { "../event/include" }
+    end
+
+    if BUILD_IRRLICHT then
+        includedirs { "../irrlicht/include" }
+    end
+
+    if BUILD_FREETYPE then
+        includedirs { "../freetype/include" }
+    end
+
+    if BUILD_SQLITE then
+        includedirs { "../sqlite3" }
+    end
 
     filter "system:windows"
         files "ygopro.rc"
-        --excludes "CGUIButton.cpp"
-        includedirs { "../irrlicht/include", "../freetype/include", "../event/include", "../sqlite3" }
-        links { "lua" }
         if USE_IRRKLANG then
             defines { "YGOPRO_USE_IRRKLANG" }
             links { "irrKlang" }
@@ -38,7 +51,7 @@ project "ygopro"
     filter "not system:windows"
         includedirs { "/usr/include/irrlicht", "/usr/include/freetype2" }
         excludes { "COSOperator.*" }
-        links { "lua5.3-c++", "event_pthreads", "GL", "dl", "pthread" }
+        links { "event_pthreads", "GL", "dl", "pthread" }
     filter "system:linux"
         if USE_IRRKLANG then
             defines { "YGOPRO_USE_IRRKLANG" }

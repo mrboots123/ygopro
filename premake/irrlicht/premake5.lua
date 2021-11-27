@@ -289,7 +289,7 @@ project "irrlicht"
             "source/Irrlicht/irrXML.cpp",
             "source/Irrlicht/CDefaultGUIElementFactory.cpp",
             "source/Irrlicht/CGUIButton.cpp",
-            "source/Irrlicht/CGUICheckbox.cpp",
+            "source/Irrlicht/CGUICheckBox.cpp",
             "source/Irrlicht/CGUIColorSelectDialog.cpp",
             "source/Irrlicht/CGUIComboBox.cpp",
             "source/Irrlicht/CGUIContextMenu.cpp",
@@ -320,5 +320,8 @@ project "irrlicht"
         includedirs { "$(DXSDK_DIR)include" }
         libdirs { "$(DXSDK_DIR)Lib/x86" }
 
-    filter { "action:windows" }
+    filter { "system:windows" }
         links { "imm32" }
+    filter { "not system:windows" }
+        links { "X11", "Xxf86vm" }
+

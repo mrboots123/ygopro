@@ -6,3 +6,6 @@ project "lua"
 
     filter "action:vs*"	
         buildoptions { "/TP" }
+
+    filter "not action:vs*"	
+        buildoptions { "-x c++" }
