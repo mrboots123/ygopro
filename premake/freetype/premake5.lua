@@ -27,7 +27,6 @@ project "freetype"
             "src/cache/ftcache.c",
             "src/cff/cff.c",
             "src/cid/type1cid.c",
-            "src/dlg/dlgwrap.c",
             "src/gzip/ftgzip.c",
             "src/lzw/ftlzw.c",
             "src/pcf/pcf.c",
@@ -46,8 +45,8 @@ project "freetype"
 
     filter "system:windows"
         files { "builds/windows/ftsystem.c",
-				"builds/windows/ftdebug.c" }
+                "builds/windows/ftdebug.c" }
 
     filter "not system:windows"
         files { "src/base/ftsystem.c",
-        "src/base/ftdebug.c" }
+                "src/base/ftdebug.c" }

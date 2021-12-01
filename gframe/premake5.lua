@@ -6,10 +6,10 @@ project "ygopro"
 
     files { "*.cpp", "*.h" }
     includedirs { "../ocgcore" }
-    links { "ocgcore", "clzma", "cspmemvfs", "lua", "irrlicht", "freetype", "sqlite3", "event" }
+    links { "ocgcore", "clzma", "cspmemvfs", "lua", "sqlite3", "irrlicht", "freetype", "event" }
 
     if BUILD_EVENT then
-    	includedirs { "../event/include" }
+        includedirs { "../event/include" }
     end
 
     if BUILD_IRRLICHT then
@@ -25,7 +25,9 @@ project "ygopro"
     end
 
     filter "system:windows"
+        defines { "_IRR_WCHAR_FILESYSTEM" }
         files "ygopro.rc"
+        libdirs { "$(DXSDK_DIR)Lib/x86" }
         if USE_IRRKLANG then
             defines { "YGOPRO_USE_IRRKLANG" }
             links { "irrKlang" }
@@ -33,26 +35,27 @@ project "ygopro"
             if IRRKLANG_PRO then
                 defines { "IRRKLANG_STATIC" }
                 links { "ikpmp3" }
+                filter { "not configurations:Debug" }
+                    libdirs { "../irrklang/lib/Win32-vs2019" }
+                filter { "configurations:Debug" }
+                    libdirs { "../irrklang/lib/Win32-visualStudio-debug" }
+                filter {}
             else
                 libdirs { "../irrklang/lib/Win32-visualStudio" }
             end
         end
         links { "opengl32", "ws2_32", "winmm", "gdi32", "kernel32", "user32", "imm32" }
-    if IRRKLANG_PRO then
-        filter { "system:windows", "not configurations:Debug" }
-            libdirs { "../irrklang/lib/Win32-vs2019" }
-        filter { "system:windows", "configurations:Debug" }
-            libdirs { "../irrklang/lib/Win32-visualStudio-debug" }
-    end
     filter { "system:windows", "not action:vs*"}
         includedirs { "/mingw/include/irrlicht", "/mingw/include/freetype2" }
     filter "not action:vs*"
         buildoptions { "-std=c++14", "-fno-rtti" }
     filter "not system:windows"
         includedirs { "/usr/include/irrlicht", "/usr/include/freetype2" }
-        excludes { "COSOperator.*" }
-        links { "event_pthreads", "GL", "dl", "pthread", "X11", "Xxf86vm" }
+        links { "event_pthreads", "dl", "pthread", "X11" }
+    filter "system:macosx"
+        links { "z" }
     filter "system:linux"
+        links { "GL", "Xxf86vm" }
         if USE_IRRKLANG then
             defines { "YGOPRO_USE_IRRKLANG" }
             links { "IrrKlang" }

@@ -316,12 +316,12 @@ project "irrlicht"
             "source/Irrlicht/CGUITreeView.cpp",
             "source/Irrlicht/CGUIWindow.cpp" }
 
-    filter { "action:vs*" }
+    filter { "system:windows" }
+        defines { "_IRR_WCHAR_FILESYSTEM" }
         includedirs { "$(DXSDK_DIR)include" }
         libdirs { "$(DXSDK_DIR)Lib/x86" }
-
-    filter { "system:windows" }
         links { "imm32" }
+
     filter { "not system:windows" }
         links { "X11", "Xxf86vm" }
 

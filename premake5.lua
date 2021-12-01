@@ -1,34 +1,30 @@
+if os.ishost("windows") then
+    USE_IRRKLANG = true
+    IRRKLANG_PRO = true
+    BUILD_LUA = true
+    BUILD_EVENT = true
+    BUILD_FREETYPE = true
+    BUILD_IRRLICHT = true
+    BUILD_SQLITE = true
+else
+    USE_IRRKLANG = true
+    IRRKLANG_PRO = false
+    BUILD_LUA = true
+    BUILD_EVENT = false --not implemented on linux
+    BUILD_FREETYPE = false
+    BUILD_IRRLICHT = not os.ishost("macosx")
+    BUILD_SQLITE = false
+end
+
 workspace "YGOPro"
     location "build"
     language "C++"
     objdir "obj"
 
-    USE_IRRKLANG = false
-    IRRKLANG_PRO = false
-
-    if os.ishost("windows") then
-        USE_IRRKLANG = true
-        IRRKLANG_PRO = true
-        BUILD_LUA = true
-        BUILD_EVENT = true
-        BUILD_FREETYPE = true
-        BUILD_IRRLICHT = true
-        BUILD_SQLITE = true
-    else
-        USE_IRRKLANG = true
-        IRRKLANG_PRO = false
-        BUILD_LUA = true
-        BUILD_EVENT = false --not implemented on linux
-        BUILD_FREETYPE = false
-        BUILD_IRRLICHT = true
-        BUILD_SQLITE = false
-    end
-
     configurations { "Release", "Debug" }
 
     filter "system:windows"
-        defines { "WIN32", "_WIN32", "WINVER=0x0501", "_IRR_WCHAR_FILESYSTEM" }
-        libdirs { "$(DXSDK_DIR)Lib/x86" }
+        defines { "WIN32", "_WIN32", "WINVER=0x0501" }
         entrypoint "mainCRTStartup"
         systemversion "latest"
         startproject "ygopro"
@@ -43,19 +39,17 @@ workspace "YGOPro"
         toolset "v141_xp"
 
     filter "system:bsd"
-        defines { "LUA_USE_POSIX" }
         includedirs { "/usr/local/include" }
         libdirs { "/usr/local/lib" }
 
     filter "system:macosx"
-        defines { "LUA_USE_MACOSX" }
         includedirs { "/usr/local/include", "/usr/local/include/*" }
-        libdirs { "/usr/local/lib", "/usr/X11/lib" }
+        removeincludedirs { "/usr/local/include/X11" }
+        libdirs { "/usr/local/lib" }
         buildoptions { "-stdlib=libc++" }
         links { "OpenGL.framework", "Cocoa.framework", "IOKit.framework" }
 
     filter "system:linux"
-        defines { "LUA_USE_LINUX" }
         buildoptions { "-U_FORTIFY_SOURCE" }
 
     filter "configurations:Release"
@@ -97,19 +91,19 @@ workspace "YGOPro"
     include "ocgcore"
     include "gframe"
     if BUILD_LUA then
-		include "lua"
-	end
-	if BUILD_EVENT then
-		include "event"
-	end
+        include "lua"
+    end
+    if BUILD_EVENT then
+        include "event"
+    end
     if BUILD_FREETYPE then
-		include "freetype"
+        include "freetype"
     end
     if BUILD_IRRLICHT then
-		include "irrlicht"
+        include "irrlicht"
     end
     if BUILD_SQLITE then
-		include "sqlite3"
+        include "sqlite3"
     end
     if USE_IRRKLANG then
         if IRRKLANG_PRO then

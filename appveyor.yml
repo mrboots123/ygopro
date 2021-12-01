@@ -28,11 +28,11 @@ install:
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.lua.org/ftp/lua-5.4.3.tar.gz ; exit 0"
   - tar xf lua-5.4.3.tar.gz
-  - move lua-5.4.3\src lua
+  - move lua-5.4.3 lua
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2021/sqlite-amalgamation-3360000.zip ; exit 0"
-  - 7z x sqlite-amalgamation-3360000.zip
-  - move sqlite-amalgamation-3360000 sqlite3
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2021/sqlite-amalgamation-3370000.zip ; exit 0"
+  - 7z x sqlite-amalgamation-3370000.zip
+  - move sqlite-amalgamation-3370000 sqlite3
   
   - git clone --depth=1 https://%access_token%@github.com/purerosefallen/irrklang
   - mv -f irrklang/plugins/ikpmp3 .
@@ -96,4 +96,4 @@ cache:
   - freetype-2.11.0.tar.gz
   - irrlicht-1.8.5.zip
   - lua-5.4.3.tar.gz
-  - sqlite-amalgamation-3360000.zip
+  - sqlite-amalgamation-3370000.zip
