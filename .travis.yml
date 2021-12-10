@@ -30,7 +30,7 @@ before_install:
 - unzip -q irrlicht-1.8.5.zip
 - mv irrlicht-1.8.5 irrlicht
 - cd irrlicht/
-- gpatch --binary -p1 < ../premake/irrlicht/irrlicht.patch
+- patch --binary -p1 < ../premake/irrlicht/irrlicht.patch
 - cd ..
 
 - ./premake5 gmake --cc=clang
