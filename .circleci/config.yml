@@ -48,7 +48,7 @@ jobs:
           command: |
             cd irrlicht
             unix2dos ../premake/irrlicht/irrlicht.patch
-            patch -p1 < ../premake/irrlicht/irrlicht.patch
+            patch --binary -p1 < ../premake/irrlicht/irrlicht.patch
             cd ..
       - run:
           name: "Generate Makefile"
