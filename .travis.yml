@@ -34,7 +34,7 @@ before_install:
 - cd ..
 
 # wtf fix
-- sudo rm-rf /usr/local/include
+- sudo rm -rf /usr/local/include
 
 - ./premake5 gmake --cc=clang
 
