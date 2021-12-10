@@ -29,7 +29,23 @@ before_install:
 - unzip -q irrlicht-1.8.5.zip
 - mv irrlicht-1.8.5 irrlicht
 - cd irrlicht/
-- gpatch --binary -p1 < ../premake/irrlicht/irrlicht.patch
+- dos2unix ../premake/irrlicht/irrlicht.patch
+- dos2unix include/IOSOperator.h
+- dos2unix include/irrString.h
+- dos2unix include/irrTypes.h
+- dos2unix source/Irrlicht/CGUIEditBox.cpp
+- dos2unix source/Irrlicht/CGUIListBox.cpp
+- dos2unix source/Irrlicht/CIrrDeviceLinux.cpp
+- dos2unix source/Irrlicht/CIrrDeviceWin32.cpp
+- dos2unix source/Irrlicht/COSOperator.cpp
+- dos2unix source/Irrlicht/COSOperator.h
+- dos2unix source/Irrlicht/MacOSX/AppDelegate.h
+- dos2unix source/Irrlicht/MacOSX/AppDelegate.mm
+- dos2unix source/Irrlicht/MacOSX/CIrrDeviceMacOSX.h
+- dos2unix source/Irrlicht/MacOSX/CIrrDeviceMacOSX.mm
+- dos2unix source/Irrlicht/MacOSX/OSXClipboard.h
+- dos2unix source/Irrlicht/MacOSX/OSXClipboard.mm
+- patch -p1 < ../premake/irrlicht/irrlicht.patch
 - cd ..
 
 - ./premake5 gmake --cc=clang
