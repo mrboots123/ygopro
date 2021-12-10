@@ -23,7 +23,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y libarchive-tools dos2unix
-            sudo apt-get install -y libevent-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev
+            sudo apt-get install -y libevent-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libxxf86vm-dev
             #sudo apt-get install -y libsqlite3-dev
       - run:
           name: "Download irrlicht"
@@ -48,6 +48,7 @@ jobs:
           name: "Patch irrlicht"
           command: |
             cd irrlicht
+            # the irrlicht zip is using CRLF, but git may clone irrlicht.patch as LF
             unix2dos ../premake/irrlicht/irrlicht.patch
             patch --binary -p1 < ../premake/irrlicht/irrlicht.patch
             cd ..
