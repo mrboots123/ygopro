@@ -43,7 +43,7 @@ jobs:
           name: "Patch irrlicht"
           command: |
             cd irrlicht
-            patch -p1 < ../premake/irrlicht/irrlicht.patch
+            patch -l -p1 < ../premake/irrlicht/irrlicht.patch
             cd ..
       - run:
           name: "Generate Makefile"
