@@ -61,7 +61,7 @@ jobs:
           name: "Make!"
           command: |
             cd build
-            make config=release -j2
+            make config=release -j$(nproc)
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
