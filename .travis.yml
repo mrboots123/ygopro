@@ -26,10 +26,10 @@ before_install:
 - mv irrKlang-64bit-1.6.0 irrklang
 
 - curl --retry 5 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.5.zip
-- unzip irrlicht-1.8.5.zip
+- unzip -q irrlicht-1.8.5.zip
 - mv irrlicht-1.8.5 irrlicht
 - cd irrlicht/
-- patch --binary -p1 < ../premake/irrlicht/irrlicht.patch
+- patch --binary --ignore-whitespace -p1 < ../premake/irrlicht/irrlicht.patch
 - cd ..
 
 - ./premake5 gmake --cc=clang
