@@ -6,13 +6,13 @@ git:
 addons:
   ssh_known_hosts:
   - github.com
-  homebrew:
-    packages:
-    - freetype
-    - libevent
-    - libx11
-    - sqlite
-    - zlib
+#  homebrew: all pre-installed by the osx_image
+#    packages:
+#    - freetype
+#    - libevent
+#    - libx11
+#    - sqlite
+#    - zlib
 
 before_install:
 - git submodule update --init
