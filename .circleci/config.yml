@@ -21,8 +21,40 @@ jobs:
           name: "Install packages"
           command: "sudo apt-get update && sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev"
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "Download irrlicht"
+          command: |
+            curl --retry 5 --connect-timeout 30 --location https://downloads.sourceforge.net/irrlicht/irrlicht-1.8.5.zip | bsdtar -xvf-
+            mv irrlicht-1.8.5 irrlicht
+      - run:
+          name: "Download irrKlang"
+          command: |
+            curl --retry 5 --connect-timeout 30 --location https://www.ambiera.at/downloads/irrKlang-64bit-1.6.0.zip | bsdtar -xvf-
+            mv irrKlang-64bit-1.6.0 irrklang
+      - run:
+          name: "Download lua"
+          command: |
+            curl --retry 5 --connect-timeout 30 --location https://www.lua.org/ftp/lua-5.4.3.tar.gz | bsdtar -xvf-
+            mv lua-5.4.3 lua
+      - run:
+          name: "Download premake"
+          command: |
+            curl --retry 5 --connect-timeout 30 --location https://github.com/premake/premake-core/releases/download/v5.0.0-beta1/premake-5.0.0-beta1-linux.tar.gz | bsdtar -xvf-
+      - run:
+          name: "Patch irrlicht"
+          command: |
+            cd irrlicht
+            patch -p1 < ../premake/irrlicht/irrlicht.patch
+            cd ..
+      - run:
+          name: "Generate Makefile"
+          command: |
+            cp -r ./premake/* .
+            ./premake5 gmake
+      - run:
+          name: "Make!"
+          command: |
+            cd build
+            make config=release -j2
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
