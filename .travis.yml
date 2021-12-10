@@ -6,10 +6,16 @@ git:
 addons:
   ssh_known_hosts:
   - github.com
+  homebrew:
+    packages:
+    - freetype
+    - libevent
+    - libx11
+    - sqlite
+    - zlib
+
 before_install:
 - git submodule update --init
-- brew update
-- brew install freetype libevent libx11 sqlite zlib
 - curl --retry 5 --connect-timeout 30 --location https://github.com/premake/premake-core/releases/download/v5.0.0-beta1/premake-5.0.0-beta1-macosx.tar.gz | tar zfx -
 
 - curl --retry 5 --connect-timeout 30 --location https://www.lua.org/ftp/lua-5.4.3.tar.gz | tar zfx -
