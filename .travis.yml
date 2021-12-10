@@ -33,6 +33,9 @@ before_install:
 - patch --binary -p1 < ../premake/irrlicht/irrlicht.patch
 - cd ..
 
+# wtf fix
+- sudo rm-rf /usr/local/include
+
 - ./premake5 gmake --cc=clang
 
 script:
