@@ -19,7 +19,7 @@ jobs:
           command: "git submodule update --init"
       - run:
           name: "Install packages"
-          command: "sudo apt-get update && sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev"
+          command: "sudo apt-get update && sudo apt-get install -y bsdtar libevent-dev libfreetype6-dev libsqlite3-dev"
       - run:
           name: "Download irrlicht"
           command: |
