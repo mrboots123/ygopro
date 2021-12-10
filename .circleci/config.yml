@@ -16,29 +16,33 @@ jobs:
       - checkout
       - run:
           name: "Checkout submodules"
-          command: "git submodule update --init"
+          command: |
+            git submodule update --init
       - run:
           name: "Install packages"
-          command: "sudo apt-get update && sudo apt-get install -y libarchive-tools libevent-dev libfreetype6-dev libsqlite3-dev"
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y libarchive-tools dos2unix
+            sudo apt-get install -y libevent-dev libfreetype6-dev libsqlite3-dev
       - run:
           name: "Download irrlicht"
           command: |
-            curl --retry 5 --connect-timeout 30 --location https://downloads.sourceforge.net/irrlicht/irrlicht-1.8.5.zip | bsdtar -xvf-
+            curl --retry 5 --connect-timeout 30 --location https://downloads.sourceforge.net/irrlicht/irrlicht-1.8.5.zip | bsdtar -xf-
             mv irrlicht-1.8.5 irrlicht
       - run:
           name: "Download irrKlang"
           command: |
-            curl --retry 5 --connect-timeout 30 --location https://www.ambiera.at/downloads/irrKlang-64bit-1.6.0.zip | bsdtar -xvf-
+            curl --retry 5 --connect-timeout 30 --location https://www.ambiera.at/downloads/irrKlang-64bit-1.6.0.zip | bsdtar -xf-
             mv irrKlang-64bit-1.6.0 irrklang
       - run:
           name: "Download lua"
           command: |
-            curl --retry 5 --connect-timeout 30 --location https://www.lua.org/ftp/lua-5.4.3.tar.gz | bsdtar -xvf-
+            curl --retry 5 --connect-timeout 30 --location https://www.lua.org/ftp/lua-5.4.3.tar.gz | bsdtar -xf-
             mv lua-5.4.3 lua
       - run:
           name: "Download premake"
           command: |
-            curl --retry 5 --connect-timeout 30 --location https://github.com/premake/premake-core/releases/download/v5.0.0-beta1/premake-5.0.0-beta1-linux.tar.gz | bsdtar -xvf-
+            curl --retry 5 --connect-timeout 30 --location https://github.com/premake/premake-core/releases/download/v5.0.0-beta1/premake-5.0.0-beta1-linux.tar.gz | bsdtar -xf-
       - run:
           name: "Patch irrlicht"
           command: |
