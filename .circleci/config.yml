@@ -69,6 +69,6 @@ workflows:
   build-workflow:
     jobs:
       - build:
-        filters:
-          branches:
-            only: test
+          filters:
+            branches:
+              only: test
