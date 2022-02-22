@@ -1469,6 +1469,9 @@ void DeckBuilder::FilterCards() {
 				match = elements_iterator->setcode && check_set_code(data, elements_iterator->setcode);
 			} else {
 				int trycode = BufferIO::GetVal(elements_iterator->keyword.c_str());
+				if (elements_iterator->keyword[0] == 'c') {
+					trycode = BufferIO::GetVal(elements_iterator->keyword.c_str() + 1);
+				}
 				bool tryresult = dataManager.GetData(trycode, 0);
 				if(!tryresult) {
 					match = CardNameContains(text.name.c_str(), elements_iterator->keyword.c_str())
