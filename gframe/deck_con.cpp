@@ -1099,6 +1099,14 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			}
 			if(havePopupWindow())
 				break;
+			if (mainGame->env->getRootGUIElement()->getElementFromPoint(mouse_pos) == mainGame->ebCardName) {
+				const wchar_t* txt = mainGame->env->getOSOperator()->getTextFromClipboard();
+				if (txt) {
+					mainGame->ebCardName->setText(txt);
+					InstantSearch();
+				}
+				break;
+			}
 			if(!is_draging) {
 				if(hovered_pos == 0 || hovered_seq == -1)
 					break;
