@@ -1371,10 +1371,14 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 	case irr::EET_KEY_INPUT_EVENT: {
 		switch (event.KeyInput.Key) {
 		case irr::KEY_F2: {
+			if (event.KeyInput.PressedDown) break;
 #ifdef _WIN32
 			wchar_t filename[512];
-			myswprintf(filename, L"script\\c%d.lua", mainGame->showingcode);
-			ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL);
+			myswprintf(filename, L"expansions\\script\\c%d.lua", mainGame->showingcode);
+			if ((INT_PTR)ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL) <= 32) {
+				myswprintf(filename, L"script\\c%d.lua", mainGame->showingcode);
+				ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL);
+			}
 #endif
 			break;
 		}
