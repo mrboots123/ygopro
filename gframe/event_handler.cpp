@@ -1469,6 +1469,11 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 			break;
 		}
 		case irr::EMIE_RMOUSE_LEFT_UP: {
+			position2di pos = mainGame->ResizeReverse(event.MouseInput.X, event.MouseInput.Y);
+			if (pos.X > 300 && pos.X < 400 && pos.Y > 570 && pos.Y < 615) {
+				mainGame->ClearChatMsg();
+				break;
+			}
 			if(mainGame->dInfo.isReplay)
 				break;
 			if(event.MouseInput.isLeftPressed())
