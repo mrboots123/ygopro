@@ -1469,6 +1469,11 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 			break;
 		}
 		case irr::EMIE_RMOUSE_LEFT_UP: {
+			position2di pos = mainGame->ResizeReverse(event.MouseInput.X, event.MouseInput.Y);
+			if (pos.X > 300 && pos.X < 400 && pos.Y > 570 && pos.Y < 615) {
+				mainGame->ClearChatMsg();
+				break;
+			}
 			if(mainGame->dInfo.isReplay)
 				break;
 			if(event.MouseInput.isLeftPressed())
@@ -2030,6 +2035,20 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				mainGame->guiFont->setTransparency(true);
 			}
 			return true;
+			break;
+		}
+		case irr::KEY_F2: {
+			if (event.KeyInput.PressedDown) break;
+			if (!mainGame->showingcode) break;
+#ifdef _WIN32
+			wchar_t filename[512];
+			myswprintf(filename, L"expansions\\script\\c%d.lua", mainGame->showingcode);
+			if ((INT_PTR)ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL) <= 32) {
+				myswprintf(filename, L"script\\c%d.lua", mainGame->showingcode);
+				ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL);
+			}
+			return true;
+#endif
 			break;
 		}
 		case irr::KEY_F9: {
