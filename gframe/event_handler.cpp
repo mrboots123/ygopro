@@ -2037,6 +2037,20 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			return true;
 			break;
 		}
+		case irr::KEY_F2: {
+			if (event.KeyInput.PressedDown) break;
+			if (!mainGame->showingcode) break;
+#ifdef _WIN32
+			wchar_t filename[512];
+			myswprintf(filename, L"expansions\\script\\c%d.lua", mainGame->showingcode);
+			if ((INT_PTR)ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL) <= 32) {
+				myswprintf(filename, L"script\\c%d.lua", mainGame->showingcode);
+				ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL);
+			}
+			return true;
+#endif
+			break;
+		}
 		case irr::KEY_F9: {
 			if(mainGame->gameConf.control_mode == 1
 				&& !event.KeyInput.PressedDown && !mainGame->HasFocus(EGUIET_EDIT_BOX)) {
