@@ -19,8 +19,8 @@ before_install:
 - git submodule update --init
 - curl --retry 5 --connect-timeout 30 --location https://github.com/premake/premake-core/releases/download/v5.0.0-beta1/premake-5.0.0-beta1-macosx.tar.gz | tar zfx -
 
-- curl --retry 5 --connect-timeout 30 --location https://www.lua.org/ftp/lua-5.4.3.tar.gz | tar zfx -
-- mv lua-5.4.3 lua
+- curl --retry 5 --connect-timeout 30 --location https://www.lua.org/ftp/lua-5.4.4.tar.gz | tar zfx -
+- mv lua-5.4.4 lua
 - cp premake/lua/premake5.lua lua/
 
 - curl --retry 5 --connect-timeout 30 --location https://www.ambiera.at/downloads/irrKlang-64bit-1.6.0.zip | tar zfx -

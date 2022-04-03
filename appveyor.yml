@@ -18,21 +18,21 @@ install:
   - move libevent-2.0.22-stable event
   - xcopy /E event\WIN32-Code event\include
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/freetype/freetype-2.11.0.tar.gz ; exit 0"
-  - tar xf freetype-2.11.0.tar.gz
-  - move freetype-2.11.0 freetype
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/freetype/freetype-2.11.1.tar.gz ; exit 0"
+  - tar xf freetype-2.11.1.tar.gz
+  - move freetype-2.11.1 freetype
   
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.5.zip ; exit 0"
   - 7z x irrlicht-1.8.5.zip
   - move irrlicht-1.8.5 irrlicht
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.lua.org/ftp/lua-5.4.3.tar.gz ; exit 0"
-  - tar xf lua-5.4.3.tar.gz
-  - move lua-5.4.3 lua
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.lua.org/ftp/lua-5.4.4.tar.gz ; exit 0"
+  - tar xf lua-5.4.4.tar.gz
+  - move lua-5.4.4 lua
   
-  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2021/sqlite-amalgamation-3370000.zip ; exit 0"
-  - 7z x sqlite-amalgamation-3370000.zip
-  - move sqlite-amalgamation-3370000 sqlite3
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2022/sqlite-amalgamation-3380200.zip ; exit 0"
+  - 7z x sqlite-amalgamation-3380200.zip
+  - move sqlite-amalgamation-3380200 sqlite3
   
   - git clone --depth=1 https://%access_token%@github.com/purerosefallen/irrklang
   - mv -f irrklang/plugins/ikpmp3 .
@@ -64,7 +64,6 @@ after_build:
   - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/mycard/ygopro-starter-pack/archive/master.zip ; exit 0"
   - 7z x ygopro-starter-pack-master.zip
   - xcopy /E ygopro-starter-pack-master\* .
-  #- 7z a ygopro-ver.233.7z ygopro.exe irrKlang.dll ikpMP3.dll LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay -xr!.git*
   - 7z a ygopro-ver.233.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay -xr!.git*
 
   - git config --global credential.helper store
@@ -93,7 +92,7 @@ deploy:
 cache:
   - premake-5.0.0-beta1-windows.zip
   - libevent-2.0.22-stable.tar.gz
-  - freetype-2.11.0.tar.gz
+  - freetype-2.11.1.tar.gz
   - irrlicht-1.8.5.zip
-  - lua-5.4.3.tar.gz
-  - sqlite-amalgamation-3370000.zip
+  - lua-5.4.4.tar.gz
+  - sqlite-amalgamation-3380200.zip
