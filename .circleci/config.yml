@@ -50,6 +50,7 @@ jobs:
             cd irrlicht
             # the irrlicht zip is using CRLF, but git may clone irrlicht.patch as LF
             unix2dos ../premake/irrlicht/irrlicht.patch
+            unix2dos source/Irrlicht/MacOSX/MacOSX.xcodeproj/project.pbxproj
             patch --binary -p1 < ../premake/irrlicht/irrlicht.patch
             cd ..
       - run:
