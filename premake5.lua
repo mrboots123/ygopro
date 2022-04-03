@@ -104,8 +104,6 @@ workspace "YGOPro"
     if BUILD_SQLITE then
         include "sqlite3"
     end
-    if USE_IRRKLANG then
-        if IRRKLANG_PRO then
-            include "ikpmp3"
-        end
+    if USE_IRRKLANG and IRRKLANG_PRO then
+        include "ikpmp3"
     end
