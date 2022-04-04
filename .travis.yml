@@ -9,6 +9,7 @@ addons:
   homebrew:
     packages:
     - gpatch
+    - unix2dos
 #    - freetype # all pre-installed by the osx_image
 #    - libevent
 #    - libx11
