@@ -2039,12 +2039,16 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 		}
 		case irr::KEY_F2: {
 			if (event.KeyInput.PressedDown) break;
-			if (!mainGame->showingcode) break;
+			CardData cd;
+			int code = mainGame->showingcode;
+			if (!code || !dataManager.GetData(code, &cd)) break;
+			if (cd.alias != 0 && (cd.alias - code < CARD_ARTWORK_VERSIONS_OFFSET || code - cd.alias < CARD_ARTWORK_VERSIONS_OFFSET))
+				code = cd.alias;
 #ifdef _WIN32
 			wchar_t filename[512];
-			myswprintf(filename, L"expansions\\script\\c%d.lua", mainGame->showingcode);
+			myswprintf(filename, L"expansions\\script\\c%d.lua", code);
 			if ((INT_PTR)ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL) <= 32) {
-				myswprintf(filename, L"script\\c%d.lua", mainGame->showingcode);
+				myswprintf(filename, L"script\\c%d.lua", code);
 				ShellExecuteW(NULL, L"edit", filename, NULL, NULL, SW_SHOWNORMAL);
 			}
 			return true;
