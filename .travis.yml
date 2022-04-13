@@ -31,6 +31,7 @@ before_install:
 - unzip -q irrlicht-1.8.5.zip
 - mv irrlicht-1.8.5 irrlicht
 - cd irrlicht
+- cp -r include /usr/local/include/irrlicht
 - unix2dos ../premake/irrlicht/irrlicht.patch
 - unix2dos source/Irrlicht/MacOSX/MacOSX.xcodeproj/project.pbxproj
 - patch --binary -p1 < ../premake/irrlicht/irrlicht.patch
@@ -41,6 +42,7 @@ before_install:
 script:
 - cd irrlicht/source/Irrlicht/MacOSX
 - xcodebuild -project MacOSX.xcodeproj
+- cp build/Release/libIrrlicht.a /usr/local/lib/
 - cd ../../../../
 - cd build
 - make config=release -j$(nproc)
