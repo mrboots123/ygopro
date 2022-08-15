@@ -139,7 +139,7 @@ end
 if IRRKLANG_PRO then
     -- irrklang pro can't use the pro lib to debug
     IRRKLANG_PRO_RELEASE_LIB_DIR = GetParam("irrklang-pro-release-lib-dir") or "../irrklang/lib/Win32-vs2019"
-    IRRKLANG_PRO_DEBUG_LIB_DIR = GetParam("irrklang-pro-debug-lib-dir") or "../irrklang/lib/Win32-visualStudio-debug"  
+    IRRKLANG_PRO_DEBUG_LIB_DIR = GetParam("irrklang-pro-debug-lib-dir") or "../irrklang/lib/Win32-visualStudio-debug"
 end
 
 BUILD_IKPMP3 = USE_IRRKLANG and (GetParam("build-ikpmp3") or IRRKLANG_PRO)
@@ -209,14 +209,14 @@ workspace "YGOPro"
         vectorextensions "SSE2"
         buildoptions { "/utf-8" }
         defines { "_CRT_SECURE_NO_WARNINGS" }
-    
+
     filter "not action:vs*"
         buildoptions { "-fno-strict-aliasing", "-Wno-multichar", "-Wno-format-security" }
 
     filter {}
 
     include "ocgcore"
-    include "gframe"
+--     include "gframe"
     if BUILD_LUA then
         include "lua"
     end
